@@ -1,6 +1,4 @@
-/**
- * Axios
- */
+/* Axios */
 import axios from 'axios';
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -8,6 +6,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Laravel Echo + Reverb
  */
+
+// Importamos el cliente de Pusher JS y lo asignamos a la ventana global
+import Pusher from 'pusher-js';
+window.Pusher = Pusher;
 
 import Echo from "laravel-echo";
 
@@ -20,4 +22,5 @@ window.Echo = new Echo({
     forceTLS: false,
     encrypted: false,
 });
+
 

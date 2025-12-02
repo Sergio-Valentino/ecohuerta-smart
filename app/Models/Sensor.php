@@ -14,19 +14,20 @@ class Sensor extends Model
     protected $fillable = [
         'nombre',
         'tipo',
+        'ubicacion',
         'modelo',
-        'descripcion',
-        'pin',
-        'activo'
+        'activo',
+        'usuario_id',
+        'cultivo_id'
     ];
 
-    public function lecturas()
+    public function usuario()
     {
-        return $this->hasMany(Lectura::class);
+        return $this->belongsTo(User::class, 'usuario_id');
     }
 
-    public function alertas()
+    public function cultivo()
     {
-        return $this->hasMany(Alerta::class);
+        return $this->belongsTo(Cultivo::class, 'cultivo_id');
     }
 }

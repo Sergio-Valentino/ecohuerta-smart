@@ -9,7 +9,7 @@ class EtapaPlanta extends Model
 {
     use HasFactory;
 
-    protected $table = 'etapas_planta';
+    protected $table = 'etapa_planta';
 
     protected $fillable = [
         'nombre',

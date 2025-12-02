@@ -2,35 +2,34 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Notificacion extends Model
 {
     use HasFactory;
 
+    // 👈 Nombre REAL de la tabla en la BD
     protected $table = 'notificaciones';
 
     protected $fillable = [
-        'user_id',
+        'usuario_id',
         'cultivo_id',
-        'alerta_id',
+        'tipo',
+        'titulo',
         'mensaje',
-        'leido'
+        'leida',
+        'fecha_envio',
     ];
 
-    public function user()
+    // Relaciones (opcionales pero recomendadas)
+    public function usuario()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'usuario_id');
     }
 
     public function cultivo()
     {
-        return $this->belongsTo(Cultivo::class);
-    }
-
-    public function alerta()
-    {
-        return $this->belongsTo(Alerta::class);
+        return $this->belongsTo(Cultivo::class, 'cultivo_id');
     }
 }

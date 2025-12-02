@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class TipoRiego extends Model
+class MetodoRiego extends Model
 {
     use HasFactory;
 
-    protected $table = 'tipos_riego';
+    protected $table = 'metodo_riego';
 
     protected $fillable = [
         'nombre',

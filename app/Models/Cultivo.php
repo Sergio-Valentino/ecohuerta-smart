@@ -38,9 +38,9 @@ class Cultivo extends Model
         return $this->belongsTo(TipoSuelo::class);
     }
 
-    public function tipoRiego()
+    public function metodoRiego()
     {
-        return $this->belongsTo(TipoRiego::class, 'metodo_riego_id');
+        return $this->belongsTo(MetodoRiego::class, 'metodo_riego_id');
     }
 
     public function tipoSiembra()

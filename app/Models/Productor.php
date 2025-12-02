@@ -3,21 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Productor extends Model
 {
-    use HasFactory;
-
     protected $table = 'productores';
 
     protected $fillable = [
-        'nombre',
-        'apellido',
-        'dni',
+        'usuario_id',
+        'nombre_finca',
         'telefono',
-        'localidad_id',
-        'region_id'
+        'region_id',
+        'localidad_id'
     ];
 
     public function localidad()
@@ -28,10 +24,5 @@ class Productor extends Model
     public function region()
     {
         return $this->belongsTo(Region::class);
-    }
-
-    public function cultivos()
-    {
-        return $this->hasMany(Cultivo::class);
     }
 }

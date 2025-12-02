@@ -14,22 +14,14 @@ class Actuador extends Model
     protected $fillable = [
         'nombre',
         'tipo',
-        'pin',
-        'activo'
+        'ubicacion',
+        'activo',
+        'cultivo_id',
     ];
 
-    public function litrosAgua()
+    // Relación con Cultivo
+    public function cultivo()
     {
-        return $this->hasMany(LitroAgua::class);
-    }
-
-    public function horarios()
-    {
-        return $this->hasMany(Horario::class);
-    }
-
-    public function logsAcciones()
-    {
-        return $this->hasMany(LogAccion::class);
+        return $this->belongsTo(Cultivo::class);
     }
 }

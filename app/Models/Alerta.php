@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Alerta extends Model
 {
@@ -12,20 +12,24 @@ class Alerta extends Model
     protected $table = 'alertas';
 
     protected $fillable = [
-        'sensor_id',
         'cultivo_id',
-        'tipo',
+        'sensor_id',
+        'parametro',
+        'valor',
+        'valor_min',
+        'valor_max',
+        'estado',
         'mensaje',
-        'leido'
+        'fecha_hora'
     ];
-
-    public function sensor()
-    {
-        return $this->belongsTo(Sensor::class);
-    }
 
     public function cultivo()
     {
         return $this->belongsTo(Cultivo::class);
+    }
+
+    public function sensor()
+    {
+        return $this->belongsTo(Sensor::class);
     }
 }

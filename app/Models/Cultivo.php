@@ -85,7 +85,7 @@ class Cultivo extends Model
 
     public function litrosAgua()
     {
-        return $this->hasMany(LitroAgua::class);
+        return $this->hasMany(LitrosAgua::class);
     }
 
     public function horarios()

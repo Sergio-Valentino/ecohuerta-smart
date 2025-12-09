@@ -13,10 +13,15 @@ class Clima extends Model
 
     protected $fillable = [
         'region_id',
-        'estacion_id',
-        'temperatura',
-        'humedad',
-        'lluvia'
+        'estaciones_id',
+        'fecha',
+        'temperatura_max',
+        'temperatura_min',
+        'humedad_relativa',
+        'velocidad_viento',
+        'radiacion_solar',
+        'precipitacion',
+        'eto_diaria',
     ];
 
     public function region()
@@ -26,6 +31,6 @@ class Clima extends Model
 
     public function estacion()
     {
-        return $this->belongsTo(Estacion::class);
+        return $this->belongsTo(Estacion::class, 'estaciones_id');
     }
 }

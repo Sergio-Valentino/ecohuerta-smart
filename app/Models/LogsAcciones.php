@@ -5,32 +5,34 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Notificacion extends Model
+class LogsAcciones extends Model
 {
     use HasFactory;
 
-    protected $table = 'notificaciones';
+    protected $table = 'logs_acciones';
 
     protected $fillable = [
         'usuario_id',
         'cultivo_id',
-        'tipo',
-        'titulo',
-        'mensaje',
-        'leida',
-        'fecha_envio',
+        'accion',
+        'descripcion',
+        'nivel',
+        'fecha_hora'
     ];
+
+    public $timestamps = true;
 
     protected $casts = [
-        'leida' => 'boolean',
-        'fecha_envio' => 'datetime',
+        'fecha_hora' => 'datetime',
     ];
 
+    // RELACIÓN: un log pertenece a un usuario
     public function usuario()
     {
         return $this->belongsTo(User::class, 'usuario_id');
     }
 
+    // RELACIÓN: un log pertenece a un cultivo
     public function cultivo()
     {
         return $this->belongsTo(Cultivo::class, 'cultivo_id');

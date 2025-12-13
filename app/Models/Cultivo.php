@@ -100,7 +100,7 @@ class Cultivo extends Model
         return $this->belongsToMany(
             Sensor::class,
             'sensor_cultivo',
-            'cultivo_id',
+            'cultivos_id',
             'sensor_id'
         );
     }

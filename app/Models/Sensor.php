@@ -35,7 +35,7 @@ class Sensor extends Model
             Cultivo::class,
             'sensor_cultivo',
             'sensor_id',
-            'cultivo_id'
+            'cultivos_id'
         );
     }
 

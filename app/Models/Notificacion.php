@@ -12,8 +12,8 @@ class Notificacion extends Model
     protected $table = 'notificaciones';
 
     protected $fillable = [
-        'usuario_id',
-        'cultivo_id',
+        'users_id',
+        'cultivos_id',
         'tipo',
         'titulo',
         'mensaje',
@@ -22,17 +22,21 @@ class Notificacion extends Model
     ];
 
     protected $casts = [
-        'leida' => 'boolean',
+        'leida'       => 'boolean',
         'fecha_envio' => 'datetime',
     ];
 
+    // =========================
+    // Relaciones
+    // =========================
+
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'usuario_id');
+        return $this->belongsTo(User::class, 'users_id');
     }
 
     public function cultivo()
     {
-        return $this->belongsTo(Cultivo::class, 'cultivo_id');
+        return $this->belongsTo(Cultivo::class, 'cultivos_id');
     }
 }

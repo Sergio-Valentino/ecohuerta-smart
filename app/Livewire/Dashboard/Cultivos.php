@@ -23,7 +23,7 @@ class Cultivos extends Component
 
     public $cultivo_id, $productor_id, $tipo_suelo_id, $metodo_riego_id,
            $tipo_siembra_id, $tipo_fuente_agua_id, $etapa_planta_id,
-           $estacion_id, $region_id, $nombre_cultivo, $fecha_siembra,
+           $estaciones_id, $region_id, $nombre_cultivo, $fecha_siembra,
            $area_m2, $densidad_siembra, $profundidad_siembra,
            $umbral_marchitez;
 
@@ -64,7 +64,7 @@ class Cultivos extends Component
         $this->tipo_siembra_id = $c->tipo_siembra_id;
         $this->tipo_fuente_agua_id = $c->tipo_fuente_agua_id;
         $this->etapa_planta_id = $c->etapa_planta_id;
-        $this->estacion_id = $c->estacion_id;
+        $this->estaciones_id = $c->estaciones_id;
         $this->region_id = $c->region_id;
         $this->nombre_cultivo = $c->nombre_cultivo;
         $this->fecha_siembra = $c->fecha_siembra;
@@ -87,7 +87,7 @@ class Cultivos extends Component
                 'tipo_siembra_id' => $this->tipo_siembra_id,
                 'tipo_fuente_agua_id' => $this->tipo_fuente_agua_id,
                 'etapa_planta_id' => $this->etapa_planta_id,
-                'estacion_id' => $this->estacion_id,
+                'estaciones_id' => $this->estaciones_id,
                 'region_id' => $this->region_id,
                 'nombre_cultivo' => $this->nombre_cultivo,
                 'fecha_siembra' => $this->fecha_siembra,
@@ -118,7 +118,7 @@ class Cultivos extends Component
         $this->tipo_siembra_id = '';
         $this->tipo_fuente_agua_id = '';
         $this->etapa_planta_id = '';
-        $this->estacion_id = '';
+        $this->estaciones_id = '';
         $this->region_id = '';
         $this->nombre_cultivo = '';
         $this->fecha_siembra = '';

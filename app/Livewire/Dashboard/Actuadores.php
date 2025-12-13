@@ -11,7 +11,10 @@ use App\Models\Cultivo;
 class Actuadores extends Component
 {
     public $actuadores, $cultivos;
-    public $actuador_id, $nombre, $tipo, $ubicacion, $activo = 1, $cultivo_id;
+
+    // Ahora es un array porque es MUCHOS A MUCHOS
+    public $actuador_id, $nombre, $tipo, $ubicacion, $activo = 1, $cultivos_ids = [];
+
     public $modal = false;
 
     public function mount()
@@ -21,7 +24,8 @@ class Actuadores extends Component
 
     public function cargarDatos()
     {
-        $this->actuadores = Actuador::with('cultivo')->get();
+        // Cargar actuadores con múltiples cultivos
+        $this->actuadores = Actuador::with('cultivos')->get();
         $this->cultivos = Cultivo::all();
     }
 
@@ -40,7 +44,9 @@ class Actuadores extends Component
         $this->tipo = $a->tipo;
         $this->ubicacion = $a->ubicacion;
         $this->activo = $a->activo;
-        $this->cultivo_id = $a->cultivo_id;
+
+        // Cargar los cultivos asociados
+        $this->cultivos_ids = $a->cultivos->pluck('id')->toArray();
 
         $this->modal = true;
     }
@@ -50,19 +56,22 @@ class Actuadores extends Component
         $this->validate([
             'nombre' => 'required|min:3',
             'tipo' => 'required',
-            'cultivo_id' => 'required',
+            'cultivos_ids' => 'required|array|min:1',
         ]);
 
-        Actuador::updateOrCreate(
+        // Guardar sin cultivo_id
+        $actuador = Actuador::updateOrCreate(
             ['id' => $this->actuador_id],
             [
                 'nombre' => $this->nombre,
                 'tipo' => $this->tipo,
                 'ubicacion' => $this->ubicacion,
                 'activo' => $this->activo ?? 0,
-                'cultivo_id' => $this->cultivo_id,
             ]
         );
+
+        // Relación pivote actuadores ↔ cultivos
+        $actuador->cultivos()->sync($this->cultivos_ids);
 
         $this->cargarDatos();
         $this->modal = false;
@@ -82,7 +91,7 @@ class Actuadores extends Component
         $this->tipo = '';
         $this->ubicacion = '';
         $this->activo = 1;
-        $this->cultivo_id = '';
+        $this->cultivos_ids = []; // reiniciar array
     }
 
     public function render()

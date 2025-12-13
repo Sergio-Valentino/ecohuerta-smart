@@ -16,7 +16,7 @@ class RiegoController extends Controller
     public function activar(Request $request)
     {
         $data = $request->validate([
-            'cultivo_id'  => 'required|exists:cultivos,id',
+            'cultivos_id'  => 'required|exists:cultivos,id',
             'actuador_id' => 'required|exists:actuadores,id',
             'motivo'      => 'required|string'
         ]);
@@ -28,8 +28,8 @@ class RiegoController extends Controller
 
         // REGISTRAR EN LOGS_ACCIONES (estructura real de tu BD)
         LogsAcciones::create([
-            'usuario_id'  => Auth::id() ?? 1, // si no hay usuario logueado
-            'cultivo_id'  => $data['cultivo_id'],
+            'users_id'  => Auth::id() ?? 1, // si no hay usuario logueado
+            'cultivos_id'  => $data['cultivos_id'],
             'accion'      => 'activar_riego',
             'descripcion' => 'Riego iniciado por motivo: ' . $data['motivo'],
             'nivel'       => 'info',

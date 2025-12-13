@@ -18,7 +18,7 @@
                     <th class="p-3">Tipo</th>
                     <th class="p-3">Ubicación</th>
                     <th class="p-3">Modelo</th>
-                    <th class="p-3">Cultivo</th>
+                    <th class="p-3">Cultivos asociados</th>
                     <th class="p-3">Activo</th>
                     <th class="p-3">Acciones</th>
                 </tr>
@@ -32,7 +32,17 @@
                     <td class="p-3">{{ $s->tipo }}</td>
                     <td class="p-3">{{ $s->ubicacion }}</td>
                     <td class="p-3">{{ $s->modelo }}</td>
-                    <td class="p-3">{{ $s->cultivo->nombre_cultivo ?? '—' }}</td>
+
+                    <td class="p-3">
+                        @forelse($s->cultivos as $c)
+                            <span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs mr-1">
+                                {{ $c->nombre_cultivo }}
+                            </span>
+                        @empty
+                            <span class="text-gray-400">—</span>
+                        @endforelse
+                    </td>
+
                     <td class="p-3">
                         @if($s->activo)
                             <span class="text-green-600 font-semibold">Sí</span>
@@ -60,7 +70,8 @@
     @if($modal)
     <div class="fixed inset-0 bg-black/40 flex items-center justify-center backdrop-blur-sm">
 
-        <div class="bg-white w-full max-w-lg p-8 rounded-2xl shadow-xl">
+        <!-- 🔥 MODAL OPTIMIZADO: tamaño perfecto + scroll interno -->
+        <div class="bg-white w-full max-w-md p-6 rounded-xl shadow-xl overflow-y-auto max-h-[90vh]">
 
             <h2 class="text-2xl font-semibold text-green-700 mb-4">
                 {{ $sensor_id ? 'Editar Sensor' : 'Nuevo Sensor' }}
@@ -89,23 +100,28 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium">Usuario</label>
-                    <select wire:model="usuario_id" class="w-full p-2 border rounded-lg">
+                    <label class="block text-sm font-medium">Usuario asignado</label>
+                    <select wire:model="users_id" class="w-full p-2 border rounded-lg">
                         <option value="">Seleccione...</option>
-                        @foreach($usuarios as $u)
+                        @foreach($users as $u)
                             <option value="{{ $u->id }}">{{ $u->name }}</option>
                         @endforeach
                     </select>
                 </div>
 
+                <!-- SELECT MULTIPLE PARA CULTIVOS -->
                 <div>
-                    <label class="block text-sm font-medium">Cultivo</label>
-                    <select wire:model="cultivo_id" class="w-full p-2 border rounded-lg">
-                        <option value="">Seleccione...</option>
+                    <label class="block text-sm font-medium">Cultivos asociados</label>
+                    <select wire:model="cultivos_ids" multiple
+                        class="w-full p-2 border rounded-lg h-24 text-sm">
                         @foreach($cultivos as $c)
                             <option value="{{ $c->id }}">{{ $c->nombre_cultivo }}</option>
                         @endforeach
                     </select>
+
+                    <p class="text-xs text-gray-500 mt-1">
+                        Mantener Ctrl (Windows) o Cmd (Mac) para seleccionar varios.
+                    </p>
                 </div>
 
                 <div>
@@ -116,6 +132,7 @@
                     </select>
                 </div>
 
+                <!-- BOTONES SIEMPRE VISIBLES -->
                 <div class="flex justify-end space-x-3 pt-4">
                     <button wire:click="$set('modal', false)" type="button"
                         class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">
@@ -127,6 +144,7 @@
                         Guardar
                     </button>
                 </div>
+
             </form>
 
         </div>

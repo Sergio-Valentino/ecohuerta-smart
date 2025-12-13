@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Alerta extends Model
 {
@@ -23,13 +23,24 @@ class Alerta extends Model
         'fecha_hora'
     ];
 
+    protected $casts = [
+        'valor'      => 'float',
+        'valor_min'  => 'float',
+        'valor_max'  => 'float',
+        'fecha_hora' => 'datetime',
+    ];
+
+    /* =========================
+       Relaciones
+    ========================= */
+
     public function cultivo()
     {
-        return $this->belongsTo(Cultivo::class);
+        return $this->belongsTo(Cultivo::class, 'cultivo_id');
     }
 
     public function sensor()
     {
-        return $this->belongsTo(Sensor::class);
+        return $this->belongsTo(Sensor::class, 'sensor_id');
     }
 }

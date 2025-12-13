@@ -16,12 +16,14 @@ class Actuador extends Model
         'tipo',
         'ubicacion',
         'activo',
-        'cultivo_id',
     ];
 
-    // Relación con Cultivo
-    public function cultivo()
+    /**
+     * Relación Muchos a Muchos con Cultivo
+     * Tabla pivote: actuador_cultivo
+     */
+    public function cultivos()
     {
-        return $this->belongsTo(Cultivo::class);
+        return $this->belongsToMany(Cultivo::class, 'actuador_cultivo');
     }
 }

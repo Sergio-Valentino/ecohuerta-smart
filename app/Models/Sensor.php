@@ -17,17 +17,36 @@ class Sensor extends Model
         'ubicacion',
         'modelo',
         'activo',
-        'usuario_id',
-        'cultivo_id'
+        'users_id',
     ];
+
+    /* =========================
+       Relaciones
+    ========================= */
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'usuario_id');
+        return $this->belongsTo(User::class, 'users_id');
     }
 
-    public function cultivo()
+    public function cultivos()
     {
-        return $this->belongsTo(Cultivo::class, 'cultivo_id');
+        return $this->belongsToMany(
+            Cultivo::class,
+            'sensor_cultivo',
+            'sensor_id',
+            'cultivo_id'
+        );
+    }
+
+    public function lecturas()
+    {
+        return $this->hasMany(Lectura::class, 'sensor_id');
+    }
+
+    public function alertas()
+    {
+        return $this->hasMany(Alerta::class, 'sensor_id');
     }
 }
+

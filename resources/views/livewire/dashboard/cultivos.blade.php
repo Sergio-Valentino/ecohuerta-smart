@@ -29,8 +29,7 @@
                     <td class="p-3 font-semibold text-gray-700">{{ $c->nombre_cultivo }}</td>
 
                     <td class="p-3">
-                        {{ $c->productor->nombre ?? '—' }}
-                        {{ $c->productor->apellido ?? '' }}
+                        {{ $c->productor->nombre_finca ?? '—' }}
                     </td>
 
                     <td class="p-3">
@@ -87,7 +86,7 @@
                         <select wire:model="productor_id" class="w-full p-2 border rounded-lg">
                             <option value="">Seleccione...</option>
                             @foreach($productores as $p)
-                                <option value="{{ $p->id }}">{{ $p->nombre }} {{ $p->apellido }}</option>
+                                <option value="{{ $p->id }}">{{ $p->nombre_finca }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -150,7 +149,7 @@
                     {{-- ESTACIÓN --}}
                     <div>
                         <label class="block text-sm font-medium">Estación</label>
-                        <select wire:model="estacion_id" class="w-full p-2 border rounded-lg">
+                        <select wire:model="estaciones_id" class="w-full p-2 border rounded-lg">
                             <option value="">Seleccione...</option>
                             @foreach($estaciones as $es)
                                 <option value="{{ $es->id }}">{{ $es->nombre }}</option>

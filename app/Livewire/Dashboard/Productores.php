@@ -13,7 +13,7 @@ class Productores extends Component
 {
     public $productores, $localidades, $regiones;
 
-    public $productor_id, $nombre_finca, $telefono, $region_id, $localidad_id;
+    public $productor_id, $nombre_finca, $telefono, $region_id, $localidades_id;
 
     public $modal = false;
 
@@ -43,7 +43,7 @@ class Productores extends Component
         $this->nombre_finca = $p->nombre_finca;
         $this->telefono = $p->telefono;
         $this->region_id = $p->region_id;
-        $this->localidad_id = $p->localidad_id;
+        $this->localidades_id = $p->localidades_id;
 
         $this->modal = true;
     }
@@ -53,7 +53,7 @@ class Productores extends Component
         $this->validate([
             'nombre_finca' => 'required|min:3',
             'region_id' => 'required',
-            'localidad_id' => 'required',
+            'localidades_id' => 'required',
         ]);
 
         Productor::updateOrCreate(
@@ -62,7 +62,7 @@ class Productores extends Component
                 'nombre_finca' => $this->nombre_finca,
                 'telefono' => $this->telefono,
                 'region_id' => $this->region_id,
-                'localidad_id' => $this->localidad_id,
+                'localidades_id' => $this->localidades_id,
             ]
         );
 
@@ -83,7 +83,7 @@ class Productores extends Component
         $this->nombre_finca = '';
         $this->telefono = '';
         $this->region_id = '';
-        $this->localidad_id = '';
+        $this->localidades_id = '';
     }
 
     public function render()

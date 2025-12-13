@@ -14,10 +14,11 @@ class Horarios extends Component
 {
     public $horarios;
 
+    // Variables correctas según nombres reales de la BD
     public $horario_id = null;
-    public $cultivo_id = '';
-    public $sensor_id = '';
-    public $actuador_id = '';
+    public $cultivos_id = '';
+    public $sensores_id = '';
+    public $actuadores_id = '';
     public $hora_inicio = '';
     public $hora_fin = '';
     public $frecuencia = '';
@@ -33,7 +34,7 @@ class Horarios extends Component
 
     public function cargarDatos()
     {
-        $this->horarios = Horario::with(['cultivo','sensor','actuador'])->get();
+        $this->horarios = Horario::with(['cultivo', 'sensor', 'actuador'])->get();
     }
 
     // Abrir modal para crear
@@ -49,9 +50,10 @@ class Horarios extends Component
         $h = Horario::findOrFail($id);
 
         $this->horario_id = $h->id;
-        $this->cultivo_id = $h->cultivo_id;
-        $this->sensor_id = $h->sensor_id;
-        $this->actuador_id = $h->actuador_id;
+        $this->cultivos_id = $h->cultivos_id;   // CAMBIO CORRECTO
+        $this->sensores_id = $h->sensores_id;   // CAMBIO CORRECTO
+        $this->actuadores_id = $h->actuadores_id; // CAMBIO CORRECTO
+
         $this->hora_inicio = $h->hora_inicio;
         $this->hora_fin = $h->hora_fin;
         $this->frecuencia = $h->frecuencia;
@@ -65,8 +67,9 @@ class Horarios extends Component
     public function guardar()
     {
         $this->validate([
-            'cultivo_id' => 'required',
-            'actuador_id' => 'required',
+            'cultivos_id' => 'required',
+            'sensores_id' => 'required',
+            'actuadores_id' => 'required',
             'hora_inicio' => 'required',
             'hora_fin' => 'required',
         ]);
@@ -74,9 +77,10 @@ class Horarios extends Component
         Horario::updateOrCreate(
             ['id' => $this->horario_id],
             [
-                'cultivo_id' => $this->cultivo_id,
-                'sensor_id' => $this->sensor_id,
-                'actuador_id' => $this->actuador_id,
+                'cultivos_id' => $this->cultivos_id,
+                'sensores_id' => $this->sensores_id,
+                'actuadores_id' => $this->actuadores_id,
+
                 'hora_inicio' => $this->hora_inicio,
                 'hora_fin' => $this->hora_fin,
                 'frecuencia' => $this->frecuencia,
@@ -101,9 +105,9 @@ class Horarios extends Component
     public function resetForm()
     {
         $this->horario_id = null;
-        $this->cultivo_id = '';
-        $this->sensor_id = '';
-        $this->actuador_id = '';
+        $this->cultivos_id = '';
+        $this->sensores_id = '';
+        $this->actuadores_id = '';
         $this->hora_inicio = '';
         $this->hora_fin = '';
         $this->frecuencia = '';

@@ -11,8 +11,11 @@ use App\Models\User;
 #[Layout('layouts.app')]
 class Sensores extends Component
 {
-    public $sensores, $cultivos, $usuarios;
-    public $sensor_id, $nombre, $tipo, $ubicacion, $modelo, $activo, $usuario_id, $cultivo_id;
+    public $sensores, $cultivos, $users;
+
+    // AHORA cultivos_ids ES UN ARRAY (muchos a muchos)
+    public $sensor_id, $nombre, $tipo, $ubicacion, $modelo, $activo, $users_id, $cultivos_ids = [];
+
     public $modal = false;
 
     public function mount()
@@ -22,9 +25,10 @@ class Sensores extends Component
 
     public function recargarDatos()
     {
-        $this->sensores = Sensor::with(['usuario', 'cultivo'])->get();
+        // Cargar sensores con relaciones
+        $this->sensores = Sensor::with(['usuario', 'cultivos'])->get();
         $this->cultivos = Cultivo::all();
-        $this->usuarios = User::all();
+        $this->users = User::all();
     }
 
     public function abrirCrear()
@@ -43,8 +47,10 @@ class Sensores extends Component
         $this->ubicacion = $s->ubicacion;
         $this->modelo = $s->modelo;
         $this->activo = $s->activo;
-        $this->usuario_id = $s->usuario_id;
-        $this->cultivo_id = $s->cultivo_id;
+        $this->users_id = $s->users_id;
+
+        // Cargar cultivos relacionados desde la tabla pivote
+        $this->cultivos_ids = $s->cultivos->pluck('id')->toArray();
 
         $this->modal = true;
     }
@@ -56,7 +62,8 @@ class Sensores extends Component
             'tipo' => 'required|min:3',
         ]);
 
-        Sensor::updateOrCreate(
+        // Guardar el sensor (sin cultivo_id porque ahora es pivote)
+        $sensor = Sensor::updateOrCreate(
             ['id' => $this->sensor_id],
             [
                 'nombre' => $this->nombre,
@@ -64,10 +71,12 @@ class Sensores extends Component
                 'ubicacion' => $this->ubicacion,
                 'modelo' => $this->modelo,
                 'activo' => $this->activo ?? 1,
-                'usuario_id' => $this->usuario_id,
-                'cultivo_id' => $this->cultivo_id,
+                'users_id' => $this->users_id,
             ]
         );
+
+        // Sincronizar cultivos seleccionados → TABLA PIVOTE
+        $sensor->cultivos()->sync($this->cultivos_ids);
 
         $this->recargarDatos();
         $this->modal = false;
@@ -88,8 +97,8 @@ class Sensores extends Component
         $this->ubicacion = '';
         $this->modelo = '';
         $this->activo = 1;
-        $this->usuario_id = '';
-        $this->cultivo_id = '';
+        $this->users_id = '';
+        $this->cultivos_ids = []; // Reiniciar array
     }
 
     public function render()

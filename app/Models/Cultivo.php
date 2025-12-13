@@ -28,14 +28,18 @@ class Cultivo extends Model
         'umbral_marchitez'
     ];
 
+    /* =========================
+       Relaciones
+    ========================= */
+
     public function productor()
     {
-        return $this->belongsTo(Productor::class);
+        return $this->belongsTo(Productor::class, 'productor_id');
     }
 
     public function tipoSuelo()
     {
-        return $this->belongsTo(TipoSuelo::class);
+        return $this->belongsTo(TipoSuelo::class, 'tipo_suelo_id');
     }
 
     public function metodoRiego()
@@ -45,51 +49,69 @@ class Cultivo extends Model
 
     public function tipoSiembra()
     {
-        return $this->belongsTo(TipoSiembra::class);
+        return $this->belongsTo(TipoSiembra::class, 'tipo_siembra_id');
     }
 
     public function tipoFuenteAgua()
     {
-        return $this->belongsTo(TipoFuenteAgua::class);
+        return $this->belongsTo(TipoFuenteAgua::class, 'tipo_fuente_agua_id');
     }
 
     public function etapaPlanta()
     {
-        return $this->belongsTo(EtapaPlanta::class);
+        return $this->belongsTo(EtapaPlanta::class, 'etapa_planta_id');
     }
 
     public function estacion()
     {
-        return $this->belongsTo(Estacion::class);
+        return $this->belongsTo(Estacion::class, 'estacion_id');
     }
 
     public function region()
     {
-        return $this->belongsTo(Region::class);
+        return $this->belongsTo(Region::class, 'region_id');
     }
+
+    /* =========================
+       Relaciones funcionales
+    ========================= */
 
     public function umbrales()
     {
-        return $this->hasMany(Umbral::class);
+        return $this->hasMany(Umbral::class, 'cultivo_id');
     }
 
     public function lecturas()
     {
-        return $this->hasMany(Lectura::class);
+        return $this->hasMany(Lectura::class, 'cultivo_id');
     }
 
-    public function cantidadAguaCultivo()
+    public function alertas()
     {
-        return $this->hasMany(CantidadAguaCultivo::class);
+        return $this->hasMany(Alerta::class, 'cultivo_id');
     }
 
-    public function litrosAgua()
+    /* =========================
+       Relaciones MANY TO MANY
+    ========================= */
+
+    public function sensores()
     {
-        return $this->hasMany(LitrosAgua::class);
+        return $this->belongsToMany(
+            Sensor::class,
+            'sensor_cultivo',
+            'cultivo_id',
+            'sensor_id'
+        );
     }
 
-    public function horarios()
+    public function actuadores()
     {
-        return $this->hasMany(Horario::class);
+        return $this->belongsToMany(
+            Actuador::class,
+            'actuador_cultivo',
+            'cultivo_id',
+            'actuador_id'
+        );
     }
 }

@@ -98,3 +98,33 @@ php artisan key:generate
 php artisan migrate
 php artisan serve
 
+## 🎓 Contexto académico
+
+Este proyecto fue desarrollado como **Trabajo Final Integrador**, aplicando conocimientos adquiridos en la formación técnica en programación.
+
+Durante su desarrollo se pusieron en práctica los siguientes contenidos:
+
+- Desarrollo de aplicaciones web con arquitectura MVC  
+- Programación backend con PHP y Laravel  
+- Diseño e implementación de APIs REST  
+- Integración con dispositivos IoT (ESP32)  
+- Automatización de procesos (riego inteligente)  
+- Modelado y gestión de bases de datos relacionales  
+- Aplicación de buenas prácticas de desarrollo de software  
+- Verificación y validación del funcionamiento del sistema  
+
+El proyecto integra software y hardware con el objetivo de resolver una problemática real vinculada a la producción agrícola y al uso eficiente del agua.
+
+## 👤 Autor
+
+**Sergio Valentino Romero**  
+Técnico en Programación  
+Desarrollador Backend / IoT  
+
+Tecnologías:  
+Laravel · PHP · Livewire · MySQL · API REST · ESP32 · IoT
+
+## 📄 Licencia
+
+Este proyecto se desarrolla con fines **académicos y educativos**.  
+El código puede ser utilizado como material de estudio y referencia, sin fines comerciales.

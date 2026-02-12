@@ -22,8 +22,8 @@ class ProgresoRiegoController extends Controller
         // Buscar registro de progreso existente o crearlo
         $progreso = LitrosAgua::updateOrCreate(
             [
-                'cultivo_id'  => $data['cultivo_id'],
-                'actuador_id' => $data['actuador_id'],
+                'cultivos_id'  => $data['cultivo_id'],
+                'actuadores_id' => $data['actuador_id'],
             ],
             [
                 'fecha_riego'        => Carbon::now(),
@@ -35,8 +35,8 @@ class ProgresoRiegoController extends Controller
 
         // Registrar en logs
         LogsAcciones::create([
-            'usuario_id'   => null, // ESP32 no tiene usuario
-            'cultivo_id'   => $data['cultivo_id'],
+            'user_id'   => null, // ESP32 no tiene usuario
+            'cultivos_id'   => $data['cultivo_id'],
             'accion'       => 'progreso_riego',
             'descripcion'  => 'Progreso actualizado: ' . $data['litros_aplicados'] . ' L aplicados',
             'nivel'        => 'info',

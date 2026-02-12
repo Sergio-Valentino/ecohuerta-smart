@@ -19,7 +19,14 @@ class CalculoAgronomicoController extends Controller
                 'message' => 'Lectura no encontrada.'
             ], 404);
         }
-
+// 2️⃣ VALIDACIÓN CLAVE 
+        if (is_null($lectura->cultivos_id)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'La lectura no tiene cultivo asociado. No se puede calcular riego.',
+                'lectura_id' => $lectura->id
+            ], 422);
+        }
         // Llamar al servicio de cálculo
         $resultado = $service->calcularParaLectura($lectura);
 

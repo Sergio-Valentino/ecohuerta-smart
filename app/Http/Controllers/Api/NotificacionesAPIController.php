@@ -12,9 +12,9 @@ class NotificacionesAPIController extends Controller
     /**
      * Listar notificaciones del usuario
      */
-    public function index($usuario_id)
+    public function index($users_id)
     {
-        return notificacion::where('usuario_id', $usuario_id)
+        return Notificacion::where('users_id', $users_id)
             ->orderBy('created_at', 'DESC')
             ->get();
     }
@@ -25,27 +25,27 @@ class NotificacionesAPIController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'usuario_id' => 'required|exists:users,id',
-            'cultivo_id' => 'nullable|exists:cultivos,id',
+            'users_id' => 'required|exists:users,id',
+            'cultivos_id' => 'nullable|exists:cultivos,id',
             'tipo'       => 'required|string',
             'titulo'     => 'required|string',
             'mensaje'    => 'required|string',
         ]);
 
         $notificacion = notificacion::create([
-            'usuario_id' => $data['usuario_id'],
-            'cultivo_id' => $data['cultivo_id'] ?? null,
+            'users_id' => $data['users_id'],
+            'cultivos_id' => $data['cultivos_id'] ?? null,
             'tipo'       => $data['tipo'],
             'titulo'     => $data['titulo'],
             'mensaje'    => $data['mensaje'],
-            'leida'      => false,
+            'leida'      => 0,
             'fecha_envio'=> Carbon::now(),
         ]);
 
         return response()->json([
-            'success' => true,
-            'data' => $notificacion
-        ]);
+           'status' => 'ok',
+            'data'   => $notificacion
+        ], 201);
     }
 
     /**
@@ -54,9 +54,12 @@ class NotificacionesAPIController extends Controller
     public function marcarLeida($id)
     {
         $notificacion = notificacion::findOrFail($id);
-        $notificacion->leida = true;
+        $notificacion->leida = 1;
         $notificacion->save();
-
-        return response()->json(['success' => true]);
+      
+        return response()->json([
+            'status' => 'ok',
+            'mensaje' => 'Notificación marcada como leída'
+        ]);
     }
 }

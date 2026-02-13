@@ -128,3 +128,93 @@ Laravel · PHP · Livewire · MySQL · API REST · ESP32 · IoT
 
 Este proyecto se desarrolla con fines **académicos y educativos**.  
 El código puede ser utilizado como material de estudio y referencia, sin fines comerciales.
+
+📡 Documentación de la API
+Introducción
+
+La API de EcoHuerta Smart permite la comunicación entre el sistema backend desarrollado en Laravel y dispositivos IoT basados en ESP32.
+Su objetivo principal es recibir lecturas de sensores, gestionar procesos de riego automático y proveer información al panel web de control.
+La comunicación se realiza mediante el protocolo HTTP utilizando el formato JSON.
+
+
+Tecnologías utilizadas
+Backend: Laravel
+Lenguaje: PHP
+Protocolo: HTTP / REST
+Formato de datos: JSON
+Base de datos: MySQL
+Dispositivos: ESP32
+
+
+URL base
+Durante el desarrollo local, la API se encuentra disponible en:
+http://localhost:8000/api
+
+
+Autenticación
+
+Algunos endpoints requieren autenticación mediante token.
+El token debe enviarse en el encabezado de la solicitud:
+
+Authorization: Bearer {token}
+
+
+
+Endpoints principales
+Registrar lecturas de sensores
+
+POST /lecturas
+
+Este endpoint recibe los datos enviados por el ESP32 y los almacena en la base de datos.
+
+Ejemplo de solicitud (JSON):
+
+{
+  "sensor_id": 1,
+  "humedad_suelo": 45,
+  "temperatura": 26,
+  "humedad_ambiente": 60
+}
+
+
+Ejemplo de respuesta:
+
+{
+  "success": true,
+  "message": "Lectura registrada correctamente"
+}
+
+
+
+
+Iniciar riego
+
+POST /riego/iniciar
+Inicia el proceso de riego automático para un cultivo o sector determinado.
+Finalizar riego
+POST /riego/finalizar
+Finaliza el riego y registra la duración y el consumo estimado.
+
+
+
+Manejo de errores
+La API puede devolver los siguientes códigos de estado:
+200 OK – Solicitud exitosa
+400 Bad Request – Error en los datos enviados
+401 Unauthorized – No autorizado
+500 Internal Server Error – Error interno del servidor
+
+
+
+Flujo de comunicación
+
+El flujo general del sistema es el siguiente:
+ESP32 → API Laravel → Base de Datos → Panel Web
+El ESP32 envía datos de sensores, la API los procesa y almacena, y el panel web muestra la información en tiempo real o de forma histórica.
+
+
+
+Licencia
+
+Este proyecto se distribuye con fines educativos y académicos.
+El código puede ser utilizado, modificado y distribuido libremente con fines no comerciales.
